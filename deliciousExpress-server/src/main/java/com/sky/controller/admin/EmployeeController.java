@@ -92,4 +92,11 @@ public class EmployeeController {
         Page<Employee> page = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(new PageResult(page.getTotal(),page.getResult()));
     }
+    @PostMapping("/status/{status}")
+    @ApiOperation(value = "启用禁用员工账号")
+    public Result startOrStop(@PathVariable Integer status,long id){
+        log.info("启用禁用员工账号{},{}",id,status);
+        employeeService.startOrStop(status,id);
+        return Result.success();
+    }
 }
