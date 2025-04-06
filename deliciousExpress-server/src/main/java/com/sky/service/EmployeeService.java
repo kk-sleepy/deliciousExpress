@@ -1,10 +1,10 @@
 package com.sky.service;
 
+import com.github.pagehelper.Page;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 
 public interface EmployeeService {
@@ -17,4 +17,6 @@ public interface EmployeeService {
     Employee login(EmployeeLoginDTO employeeLoginDTO);
 
     void save(EmployeeDTO employeeDTO);
+
+    Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 }
