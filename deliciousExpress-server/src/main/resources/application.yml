@@ -36,13 +36,19 @@ logging:
 sky:
   jwt:
     # 设置jwt签名加密时使用的秘钥
-    admin-secret-key: itcast
+    admin-secret-key: kk
     # 设置jwt过期时间
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+    user-secret-key: kksleepy
+    user-ttl: 7200000
+    user-token-name: authentication
   aliosms:
     endpoint: ${sky.aliosms.endpoint}
     access-key-id: ${sky.aliosms.access-key-id}
     access-key-secret: ${sky.aliosms.access-key-secret}
     bucket-name: ${sky.aliosms.bucket-name}
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
