@@ -18,19 +18,27 @@ import java.util.List;
 @Api(tags = "C端用户-购物车接口")
 public class ShoppingCartController {
     @Autowired
-    private ShoppingCartService shoppingCardService;
+    private ShoppingCartService shoppingcartService;
     @PostMapping("/add")
     @ApiOperation(value = "添加购物车")
     public Result add(@RequestBody ShoppingCartDTO shoppingCartDTO) {
         log.info("添加购物车: {}", shoppingCartDTO);
-        shoppingCardService.addShoppingCard(shoppingCartDTO);
+        shoppingcartService.addShoppingCart(shoppingCartDTO);
         return  Result.success();
     }
 
     @ApiOperation(value = "删除购物车")
     @GetMapping("/list")
     public Result<List<ShoppingCart>> list(){
-        List<ShoppingCart> list =  shoppingCardService.showShoppingCard();
+        List<ShoppingCart> list =  shoppingcartService.showShoppingCart();
         return Result.success(list);
+    }
+
+    @ApiOperation(value = "清空购物车")
+    @DeleteMapping("/clean")
+    public Result clean(){
+        log.info("清空购物车");
+        shoppingcartService.cleanShoppingCart();
+        return Result.success();
     }
 }

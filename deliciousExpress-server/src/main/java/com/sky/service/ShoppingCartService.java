@@ -6,7 +6,9 @@ import com.sky.entity.ShoppingCart;
 import java.util.List;
 
 public interface ShoppingCartService {
-    public void addShoppingCard(ShoppingCartDTO shoppingCartDTO);
+    public void addShoppingCart(ShoppingCartDTO shoppingCartDTO);
 
-    List<ShoppingCart> showShoppingCard();
+    List<ShoppingCart> showShoppingCart();
+
+    void cleanShoppingCart();
 }

@@ -21,22 +21,22 @@ import java.util.List;
 @Slf4j
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Autowired
-    private ShoppingCartMapper shoppingCardMapper;
+    private ShoppingCartMapper shoppingcartMapper;
     @Autowired
     private DishMapper dishMapper;
     @Autowired
     private SetmealMapper setmealMapper;
     @Override
-    public void addShoppingCard(ShoppingCartDTO shoppingCartDTO) {
+    public void addShoppingCart(ShoppingCartDTO shoppingCartDTO) {
         ShoppingCart shoppingCart = new ShoppingCart();
         BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);
         shoppingCart.setUserId(BaseContext.getCurrentId());
-        List<ShoppingCart> list = shoppingCardMapper.list(shoppingCart);
+        List<ShoppingCart> list = shoppingcartMapper.list(shoppingCart);
         if(list!=null && list.size()>0){
             // 如果购物车中已经存在该商品，则更新数量
             ShoppingCart cart = list.get(0);
             cart.setNumber(cart.getNumber() + 1);
-            shoppingCardMapper.updateNumberById(cart);
+            shoppingcartMapper.updateNumberById(cart);
         }else{
             // 如果购物车中不存在该商品，则添加到购物车
             Long dishId = shoppingCartDTO.getDishId();
@@ -53,17 +53,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             }
             shoppingCart.setNumber(1);
             shoppingCart.setCreateTime(LocalDateTime.now());
-            shoppingCardMapper.insert(shoppingCart);
+            shoppingcartMapper.insert(shoppingCart);
         }
     }
 
     @Override
-    public List<ShoppingCart> showShoppingCard() {
+    public List<ShoppingCart> showShoppingCart() {
         Long userId = BaseContext.getCurrentId();
         ShoppingCart shoppingCart = ShoppingCart.builder()
                 .userId(userId)
                 .build();
-        List<ShoppingCart> list = shoppingCardMapper.list(shoppingCart);
+        List<ShoppingCart> list = shoppingcartMapper.list(shoppingCart);
         return list;
+    }
+
+    @Override
+    public void cleanShoppingCart() {
+        shoppingcartMapper.deleteByUserId(BaseContext.getCurrentId());
     }
 }
