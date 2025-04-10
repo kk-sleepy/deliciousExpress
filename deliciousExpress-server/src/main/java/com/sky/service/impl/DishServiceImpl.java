@@ -51,6 +51,7 @@ public class DishServiceImpl implements DishService {
         long dishId = dish.getId();
         List<DishFlavor> flavors = dishDTO.getFlavors();
         if(flavors!=null && flavors.size()>0){
+            dishFlavorMapper.deleteByDishId(dishId);
             flavors.forEach((item)->{
                 item.setDishId(dishId);
             });
