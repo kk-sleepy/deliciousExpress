@@ -1,5 +1,7 @@
 package com.sky.mapper;
 
+import com.github.pagehelper.Page;
+import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.AddressBook;
 import com.sky.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,8 +18,12 @@ public interface OrderMapper {
      */
     void insert(Orders orders);
 
-    @Select("SELECT * FROM address_book WHERE id = #{addressBookId}")
-    AddressBook getById(Long addressBookId);
+    /**
+     * 根据id查询订单
+     * @param id
+     */
+    @Select("select * from orders where id=#{id}")
+    Orders getById(Long id);
 
     /**
      * 根据订单号查询订单
@@ -34,4 +40,15 @@ public interface OrderMapper {
 
     @Update("UPDATE orders SET pay_status = #{orderPaidStatus}, status = #{orderStatus}, checkout_time = #{checkoutTime} WHERE number = #{orderNumber}")
     void updateStatus(String orderNumber, Integer orderPaidStatus, Integer orderStatus, LocalDateTime checkoutTime);
+    /**
+     * 分页条件查询并按下单时间排序
+     * @param ordersPageQueryDTO
+     */
+    Page<Orders> pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
+    /**
+     * 根据状态统计订单数量
+     * @param status
+     */
+    @Select("select count(id) from orders where status = #{status}")
+    Integer countStatus(Integer status);
 }
