@@ -539,4 +539,18 @@ public class OrderServiceImpl implements OrderService {
             throw new OrderBusinessException("超出配送范围");
         }
     }
+
+    @Override
+    public void reminder(Long id) {
+        Map map = new HashMap();
+        Orders orders=orderMapper.getById(id);
+        if(orders==null){
+            throw new OrderBusinessException("订单不存在");
+        }
+        map.put("type",2);
+        map.put("orderId",orders.getId());
+        map.put("content","订单号"+orders.getNumber());
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
+    }
 }
