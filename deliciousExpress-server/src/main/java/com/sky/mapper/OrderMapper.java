@@ -61,4 +61,5 @@ public interface OrderMapper {
     Orders getByNumberAndUserId(String orderNumber, Long userId);
 
     Double sumByMap(Map map);
+    Integer countByMap(Map map);
 }
